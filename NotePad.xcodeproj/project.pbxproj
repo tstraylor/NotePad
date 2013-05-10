@@ -22,6 +22,7 @@
 		1D921DBE173CB5BD00168A77 /* NotePad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DBC173CB5BD00168A77 /* NotePad.xcdatamodeld */; };
 		1D921DC1173CB5BD00168A77 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DC0173CB5BD00168A77 /* MasterViewController.m */; };
 		1D921DC4173CB5BD00168A77 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DC3173CB5BD00168A77 /* DetailViewController.m */; };
+		1D921DD0173CC89800168A77 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DCF173CC89800168A77 /* Note.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		1D921DC0173CB5BD00168A77 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		1D921DC2173CB5BD00168A77 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		1D921DC3173CB5BD00168A77 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		1D921DCE173CC89800168A77 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		1D921DCF173CC89800168A77 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +105,7 @@
 				1D921DC0173CB5BD00168A77 /* MasterViewController.m */,
 				1D921DC2173CB5BD00168A77 /* DetailViewController.h */,
 				1D921DC3173CB5BD00168A77 /* DetailViewController.m */,
-				1D921DBC173CB5BD00168A77 /* NotePad.xcdatamodeld */,
+				1D921DCA173CC65500168A77 /* Core Data */,
 				1D921DA5173CB5BD00168A77 /* Supporting Files */,
 			);
 			path = NotePad;
@@ -120,6 +123,16 @@
 				1D921DB4173CB5BD00168A77 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1D921DCA173CC65500168A77 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				1D921DCE173CC89800168A77 /* Note.h */,
+				1D921DCF173CC89800168A77 /* Note.m */,
+				1D921DBC173CB5BD00168A77 /* NotePad.xcdatamodeld */,
+			);
+			name = "Core Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +207,7 @@
 				1D921DBE173CB5BD00168A77 /* NotePad.xcdatamodeld in Sources */,
 				1D921DC1173CB5BD00168A77 /* MasterViewController.m in Sources */,
 				1D921DC4173CB5BD00168A77 /* DetailViewController.m in Sources */,
+				1D921DD0173CC89800168A77 /* Note.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +340,7 @@
 				1D921DC9173CB5BD00168A77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
