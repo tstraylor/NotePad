@@ -23,6 +23,7 @@
 		1D921DC1173CB5BD00168A77 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DC0173CB5BD00168A77 /* MasterViewController.m */; };
 		1D921DC4173CB5BD00168A77 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DC3173CB5BD00168A77 /* DetailViewController.m */; };
 		1D921DD0173CC89800168A77 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DCF173CC89800168A77 /* Note.m */; };
+		1D9A6E20173FFCE3002AEE41 /* Note+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9A6E1F173FFCE3002AEE41 /* Note+Create.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,8 @@
 		1D921DC3173CB5BD00168A77 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		1D921DCE173CC89800168A77 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		1D921DCF173CC89800168A77 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		1D9A6E1E173FFCE3002AEE41 /* Note+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Note+Create.h"; sourceTree = "<group>"; };
+		1D9A6E1F173FFCE3002AEE41 /* Note+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Note+Create.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,8 @@
 				1D921DCE173CC89800168A77 /* Note.h */,
 				1D921DCF173CC89800168A77 /* Note.m */,
 				1D921DBC173CB5BD00168A77 /* NotePad.xcdatamodeld */,
+				1D9A6E1E173FFCE3002AEE41 /* Note+Create.h */,
+				1D9A6E1F173FFCE3002AEE41 /* Note+Create.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -208,6 +213,7 @@
 				1D921DC1173CB5BD00168A77 /* MasterViewController.m in Sources */,
 				1D921DC4173CB5BD00168A77 /* DetailViewController.m in Sources */,
 				1D921DD0173CC89800168A77 /* Note.m in Sources */,
+				1D9A6E20173FFCE3002AEE41 /* Note+Create.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

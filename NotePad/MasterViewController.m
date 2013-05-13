@@ -7,10 +7,13 @@
 //
 
 #import "MasterViewController.h"
-
 #import "DetailViewController.h"
+#import "Note.h"
 
 @interface MasterViewController ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addNote;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editNoteEntry;
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -29,10 +32,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+#if 0
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
+#endif
+    
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
@@ -42,11 +48,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+#if 0
 - (void)insertNewObject:(id)sender
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:context];
     
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
@@ -61,7 +68,7 @@
         abort();
     }
 }
-
+#endif
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -112,19 +119,29 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        self.detailViewController.detailItem = object;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+    {
+        Note *note = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        self.detailViewController.note = note;
     }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+    if ([[segue identifier] isEqualToString:@"showNote"])
+    {
+        NSLog(@"[%@ %@] showNote", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
+        Note *note = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        [[segue destinationViewController] setNote:note];
     }
+    else if([[segue identifier] isEqualToString:@"addNote"])
+    {
+        NSLog(@"[%@ %@] addNote", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+    }
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Fetched results controller
@@ -228,8 +245,13 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM-dd-yyyy HH:mm"];
+    Note *note = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSRange range = NSMakeRange(0, 10);
+    cell.textLabel.text = [NSString stringWithFormat:@"%@...",[note.text substringWithRange:range]];
+    cell.detailTextLabel.text = [dateFormatter stringFromDate:note.timeStamp];
+    NSLog(@"[%@ %@] label: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), cell.textLabel.text);
 }
 
 @end
