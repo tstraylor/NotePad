@@ -63,16 +63,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Notes" id="36">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="Yc3-ib-14J"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Of2-kN-esW">
                             <connections>
-                                <segue destination="21" kind="push" identifier="addNote" id="keL-Dv-xRx"/>
+                                <action selector="addNoteButtonPressed:" destination="12" id="8IJ-Tw-iEG"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addNote" destination="Of2-kN-esW" id="MSf-8b-Wbn"/>
-                        <outlet property="editNoteEntry" destination="Yc3-ib-14J" id="CYr-hc-rmc"/>
+                        <segue destination="21" kind="push" identifier="addNote" id="hOU-T2-Id5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="17" sceneMemberID="firstResponder"/>
@@ -113,15 +111,8 @@
                             <constraint firstItem="BTr-Bf-ZYW" firstAttribute="bottom" secondItem="22" secondAttribute="bottom" type="default" id="pn8-ol-Jdz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Notepad" id="26">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="YFe-E6-3sA">
-                            <connections>
-                                <action selector="doneButtonPressed:" destination="21" id="Vz6-hV-XCJ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="26"/>
                     <connections>
-                        <outlet property="navigationBar" destination="26" id="cdf-Z7-aeX"/>
                         <outlet property="scrollView" destination="BTr-Bf-ZYW" id="HMB-VS-c2a"/>
                         <outlet property="textView" destination="Kra-wh-CNi" id="OQk-wO-5mZ"/>
                     </connections>
@@ -131,32 +122,12 @@
             <point key="canvasLocation" x="902" y="64"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="DetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneButtonPressed:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="MasterViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MasterViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="addNote" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="editNoteEntry" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="keL-Dv-xRx"/>
+        <segue reference="hOU-T2-Id5"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,6 +10,7 @@
 #import "Note+Create.h"
 
 @interface DetailViewController ()
+
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
@@ -36,7 +37,7 @@
     if (_note != note)
     {
         _note = note;
-        
+        //_managedObjectContext = nil;
         // Update the view.
         [self configureView];
     }
@@ -54,7 +55,15 @@
     if(_managedObjectContext != managedObjectContext)
     {
         _managedObjectContext = managedObjectContext;
-        
+    }
+    
+    _note = nil;
+    self.textView.text = nil;
+    self.navigationItem.title = @"";
+    
+    if (self.masterPopoverController != nil)
+    {
+        [self.masterPopoverController dismissPopoverAnimated:YES];
     }
 }
 
@@ -74,16 +83,26 @@
 - (void)keyboardWasShown:(NSNotification*)notification
 {
     // get the size of the keyboard so we can move the textview up to keep the
-    // keyboard from hidding the test input.
+    // keyboard from hiding the test input.
     NSDictionary* info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-    self.scrollView.contentInset = contentInsets;
-    self.scrollView.scrollIndicatorInsets = contentInsets;
-    CGRect rect = self.view.frame;
-    rect.size.height -= kbSize.height;
+    CGRect rect = self.textView.frame;
 
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if(UIInterfaceOrientationIsPortrait(orientation))
+    {
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+        self.scrollView.contentInset = contentInsets;
+        self.scrollView.scrollIndicatorInsets = contentInsets;
+        rect.size.height -= kbSize.height;
+    }
+    else if(UIInterfaceOrientationIsLandscape(orientation))
+    {
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.width, 0.0);
+        self.scrollView.contentInset = contentInsets;
+        self.scrollView.scrollIndicatorInsets = contentInsets;
+        rect.size.height -= kbSize.width;
+    }
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)notification
@@ -98,17 +117,35 @@
 - (void)configureView
 {
     // Update the user interface for the detail item.
-    
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     if (self.note)
     {
         if(self.note.text)
         {
-            NSRange range = NSMakeRange(0, 10);
-            NSString *title = [NSString stringWithFormat:@"%@...",[self.note.text substringWithRange:range]];
+            NSRange cr = [self.note.text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
+            if(cr.length != NSNotFound)
+            {
+                if(cr.location > 12)
+                {
+                    NSUInteger len = MIN([self.note.text length], 12);
+                    NSRange range = NSMakeRange(0, len);
+                    self.navigationItem.title = [NSString stringWithFormat:@"%@...",[self.note.text substringWithRange:range]];
+                }
+                else
+                {
+                    NSRange range = NSMakeRange(0, cr.location);
+                    self.navigationItem.title = [self.note.text substringWithRange:range];
             
-            self.navigationItem.title = title;
+                }
+            }
+            else
+            {
+                NSUInteger len = MIN([self.note.text length], 12);
+                NSRange range = NSMakeRange(0, len);
+                self.navigationItem.title = [NSString stringWithFormat:@"%@...",[self.note.text substringWithRange:range]];
+            }
+        
             self.textView.text = self.note.text;
-            
         }
         else
         {
@@ -119,9 +156,15 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
+    UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addANote:)];
+    add.enabled = YES;
+    [self.navigationItem setRightBarButtonItem:add animated:YES];
+    
     self.textView.delegate = self;
     [self.view addSubview:self.scrollView];
     [self.scrollView addSubview:self.textView];
@@ -141,16 +184,24 @@
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    barButtonItem.title = NSLocalizedString(@"Notes", @"Notes");
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
     self.masterPopoverController = popoverController;
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     self.masterPopoverController = nil;
+}
+
+- (void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController
+{
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    [self.view endEditing:YES];
 }
 
 #pragma mark - UITextViewDelegate methods
@@ -158,13 +209,20 @@
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                         target:self
+                                                                         action:@selector(doneButtonPressed:)];
+    done.enabled = YES;
+    [self.navigationItem setRightBarButtonItem:done animated:YES];
+
+    //self.navigationItem.rightBarButtonItem = self.barButton;
 }
 
 - (void)textViewDidChange:(UITextView *)textView
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
-    if([self.textView.text length] < 10)
+    if([self.textView.text length] < 12)
     {
         NSRange range;
         range = NSMakeRange(0, [self.textView.text length]);
@@ -186,9 +244,13 @@
     }
     else
     {
-        NSLog(@"[%@ %@] updating a new note", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-        self.note.text = self.textView.text;
-        self.note.timeStamp = [NSDate date];
+        
+        if(![self.note.text isEqualToString:self.textView.text])
+        {
+            NSLog(@"[%@ %@] updating a new note", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+            self.note.text = self.textView.text;
+            self.note.timeStamp = [NSDate date];
+        }
     }
     
     [self.note.managedObjectContext save:nil];
@@ -201,7 +263,7 @@
     return YES;
 }
 
-#pragma mark - Done Button Pressed
+#pragma mark - UIBarButtonItem Action
 
 - (IBAction)doneButtonPressed:(UIBarButtonItem *)sender
 {
@@ -210,5 +272,9 @@
     [self.view endEditing:YES];
 }
 
+- (IBAction)addANote:(UIBarButtonItem *)sender
+{
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+}
 
 @end

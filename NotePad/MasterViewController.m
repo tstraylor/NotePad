@@ -11,16 +11,23 @@
 #import "Note.h"
 
 @interface MasterViewController ()
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addNote;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editNoteEntry;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
 @end
 
 @implementation MasterViewController
 
+@synthesize detailViewController = _detailViewController;
+@synthesize fetchedResultsController = _fetchedResultsController;
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize addNote = _addNote;
+
 - (void)awakeFromNib
 {
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.clearsSelectionOnViewWillAppear = NO;
         self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
@@ -31,15 +38,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-#if 0
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-#endif
+    
+    // Do any additional setup after loading the view, typically from a nib.
     
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,27 +53,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#if 0
-- (void)insertNewObject:(id)sender
-{
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:context];
-    
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-    
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-         // Replace this implementation with code to handle the error appropriately.
-         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-}
-#endif
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -248,10 +232,49 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM-dd-yyyy HH:mm"];
     Note *note = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSRange range = NSMakeRange(0, 10);
-    cell.textLabel.text = [NSString stringWithFormat:@"%@...",[note.text substringWithRange:range]];
+    NSRange cr = [note.text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
+    // NSLog(@"[%@ %@] CR: (%d, %d)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), cr.location, cr.length);
+    if(cr.length != NSNotFound)
+    {
+        if(cr.location > 24)
+        {
+            NSUInteger len = MIN([note.text length], 24);
+            NSRange range = NSMakeRange(0, len);
+            cell.textLabel.text = [NSString stringWithFormat:@"%@...",[note.text substringWithRange:range]];
+        }
+        else
+        {
+            NSRange range = NSMakeRange(0, cr.location);
+            cell.textLabel.text = [note.text substringWithRange:range];
+            
+        }
+    }
+    else
+    {
+        NSUInteger len = MIN([note.text length], 24);
+        NSRange range = NSMakeRange(0, len);
+        cell.textLabel.text = [NSString stringWithFormat:@"%@...",[note.text substringWithRange:range]];
+        NSLog(@"[%@ %@] label: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), cell.textLabel.text);
+    }
+    
     cell.detailTextLabel.text = [dateFormatter stringFromDate:note.timeStamp];
-    NSLog(@"[%@ %@] label: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), cell.textLabel.text);
+
+}
+
+#pragma mark - Add Note
+
+- (IBAction)addNoteButtonPressed:(UIBarButtonItem *)sender
+{
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+    {
+        [self.detailViewController setManagedObjectContext:self.managedObjectContext];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"addNote" sender:self];
+    }
 }
 
 @end
