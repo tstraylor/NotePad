@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D21CD711749DB8500BFAC87 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1D21CD701749DB8500BFAC87 /* LICENSE.txt */; };
 		1D921D9D173CB5BD00168A77 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D921D9C173CB5BD00168A77 /* UIKit.framework */; };
 		1D921D9F173CB5BD00168A77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D921D9E173CB5BD00168A77 /* Foundation.framework */; };
 		1D921DA1173CB5BD00168A77 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D921DA0173CB5BD00168A77 /* CoreGraphics.framework */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D21CD701749DB8500BFAC87 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		1D921D99173CB5BD00168A77 /* NotePad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotePad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D921D9C173CB5BD00168A77 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1D921D9E173CB5BD00168A77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -124,6 +126,7 @@
 				1D921DB0173CB5BD00168A77 /* Default.png */,
 				1D921DB2173CB5BD00168A77 /* Default@2x.png */,
 				1D921DB4173CB5BD00168A77 /* Default-568h@2x.png */,
+				1D21CD701749DB8500BFAC87 /* LICENSE.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				1D921DB5173CB5BD00168A77 /* Default-568h@2x.png in Resources */,
 				1D921DB8173CB5BD00168A77 /* MainStoryboard_iPhone.storyboard in Resources */,
 				1D921DBB173CB5BD00168A77 /* MainStoryboard_iPad.storyboard in Resources */,
+				1D21CD711749DB8500BFAC87 /* LICENSE.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
