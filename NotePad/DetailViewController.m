@@ -5,6 +5,23 @@
 //  Created by Thomas Traylor on 5/9/13.
 //  Copyright (c) 2013 Thomas Traylor. All rights reserved.
 //
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 #import "DetailViewController.h"
 #import "Note+Create.h"
@@ -16,9 +33,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
 - (void)configureView;
-- (void)registerForKeyboardNotifications;
-- (void)keyboardWasShown:(NSNotification*)notification;
-- (void)keyboardWillBeHidden:(NSNotification*)notification;
+- (NSString *)makeTitle:(NSString*)text;
 
 @end
 
@@ -37,7 +52,6 @@
     if (_note != note)
     {
         _note = note;
-        //_managedObjectContext = nil;
         // Update the view.
         [self configureView];
     }
@@ -45,13 +59,20 @@
     if (self.masterPopoverController != nil)
     {
         [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
+    }
+    
+    if(self.splitViewController)
+    {
+        UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                             target:self
+                                                                             action:@selector(addANote:)];
+        add.enabled = YES;
+        [self.navigationItem setRightBarButtonItem:add animated:YES];
+    }
 }
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
-    NSLog(@"[%@ %@] context: %p", NSStringFromClass([self class]), NSStringFromSelector(_cmd), managedObjectContext);
-    
     if(_managedObjectContext != managedObjectContext)
     {
         _managedObjectContext = managedObjectContext;
@@ -122,29 +143,7 @@
     {
         if(self.note.text)
         {
-            NSRange cr = [self.note.text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
-            if(cr.length != NSNotFound)
-            {
-                if(cr.location > 12)
-                {
-                    NSUInteger len = MIN([self.note.text length], 12);
-                    NSRange range = NSMakeRange(0, len);
-                    self.navigationItem.title = [NSString stringWithFormat:@"%@...",[self.note.text substringWithRange:range]];
-                }
-                else
-                {
-                    NSRange range = NSMakeRange(0, cr.location);
-                    self.navigationItem.title = [self.note.text substringWithRange:range];
-            
-                }
-            }
-            else
-            {
-                NSUInteger len = MIN([self.note.text length], 12);
-                NSRange range = NSMakeRange(0, len);
-                self.navigationItem.title = [NSString stringWithFormat:@"%@...",[self.note.text substringWithRange:range]];
-            }
-        
+            self.navigationItem.title = [self makeTitle:self.note.text];
             self.textView.text = self.note.text;
         }
         else
@@ -161,7 +160,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
-    UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addANote:)];
+    UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                         target:self
+                                                                         action:@selector(addANote:)];
     add.enabled = YES;
     [self.navigationItem setRightBarButtonItem:add animated:YES];
     
@@ -171,7 +172,7 @@
 
     [self configureView];
     [self registerForKeyboardNotifications];
-    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -182,7 +183,10 @@
 
 #pragma mark - Split view
 
-- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
+- (void)splitViewController:(UISplitViewController *)splitController
+     willHideViewController:(UIViewController *)viewController
+          withBarButtonItem:(UIBarButtonItem *)barButtonItem
+       forPopoverController:(UIPopoverController *)popoverController
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     barButtonItem.title = NSLocalizedString(@"Notes", @"Notes");
@@ -190,15 +194,20 @@
     self.masterPopoverController = popoverController;
 }
 
-- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+- (void)splitViewController:(UISplitViewController *)splitController
+     willShowViewController:(UIViewController *)viewController
+  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     self.masterPopoverController = nil;
 }
 
-- (void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController
+- (void)splitViewController:(UISplitViewController *)svc
+          popoverController:(UIPopoverController *)pc
+  willPresentViewController:(UIViewController *)aViewController
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     [self.view endEditing:YES];
@@ -209,33 +218,27 @@
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                          target:self
                                                                          action:@selector(doneButtonPressed:)];
     done.enabled = YES;
     [self.navigationItem setRightBarButtonItem:done animated:YES];
-
-    //self.navigationItem.rightBarButtonItem = self.barButton;
 }
 
 - (void)textViewDidChange:(UITextView *)textView
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
+    // we want our title to be less then 12 characters.
     if([self.textView.text length] < 12)
     {
-        NSRange range;
-        range = NSMakeRange(0, [self.textView.text length]);
-        self.navigationItem.title = [NSString stringWithString:[self.textView.text substringWithRange:range]];
+        self.navigationItem.title = [self makeTitle:textView.text];
     }
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    NSLog(@"[%@ %@] text size: %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self.textView.text length]);
-    NSLog(@"[%@ %@] context: %p", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.managedObjectContext);
-    NSLog(@"[%@ %@] note: %p", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.note);
-    
     if(self.managedObjectContext && self.note == nil &&  [self.textView.text length] > 0)
     {
         NSLog(@"[%@ %@] adding a new note", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -244,7 +247,7 @@
     }
     else
     {
-        
+        // we only want to update the note in the DB if there were changes to it.
         if(![self.note.text isEqualToString:self.textView.text])
         {
             NSLog(@"[%@ %@] updating a new note", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -255,6 +258,15 @@
     
     [self.note.managedObjectContext save:nil];
     
+    // now the we finished editing the note, switch the bar button back to "Done"
+    if(self.splitViewController)
+    {
+        UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                             target:self
+                                                                             action:@selector(addANote:)];
+        add.enabled = YES;
+        [self.navigationItem setRightBarButtonItem:add animated:YES];
+    }
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView;
@@ -275,6 +287,38 @@
 - (IBAction)addANote:(UIBarButtonItem *)sender
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    self.managedObjectContext = self.note.managedObjectContext;
+}
+
+#pragma mark - Title Method
+
+// create the title for the note
+- (NSString *)makeTitle:(NSString *)text
+{
+    NSString *title;
+    NSRange cr = [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
+    if(cr.length != NSNotFound)
+    {
+        if(cr.location > 12)
+        {
+            NSUInteger len = MIN([text length], 12);
+            NSRange range = NSMakeRange(0, len);
+            title = [NSString stringWithFormat:@"%@...",[self.note.text substringWithRange:range]];
+        }
+        else
+        {
+            NSRange range = NSMakeRange(0, cr.location);
+            title = [self.note.text substringWithRange:range];
+        }
+    }
+    else
+    {
+        NSUInteger len = MIN([text length], 12);
+        NSRange range = NSMakeRange(0, len);
+        title = [NSString stringWithFormat:@"%@...",[self.note.text substringWithRange:range]];
+    }
+    
+    return title;
 }
 
 @end

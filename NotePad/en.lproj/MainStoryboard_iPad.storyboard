@@ -55,13 +55,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="53">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Vje-aQ-qZc">
-                            <connections>
-                                <action selector="doneButtonPressed:" destination="4" id="A6e-ba-gvm"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="53"/>
                     <connections>
                         <outlet property="scrollView" destination="fGg-QK-EER" id="Xbu-i8-o87"/>
                         <outlet property="textView" destination="qv4-vy-m8v" id="VKW-ct-Q7g"/>
@@ -160,6 +154,7 @@
         <class className="DetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addANote:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="doneButtonPressed:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
@@ -169,7 +164,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MasterViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addNoteButtonPressed:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="addNote" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
