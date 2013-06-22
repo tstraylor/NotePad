@@ -228,13 +228,15 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    NSLog(@"[%@ %@] text len: %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self.textView.text length]);
 
     // we want our title to be less then 12 characters.
     if([self.textView.text length] < 12)
     {
-        self.navigationItem.title = [self makeTitle:textView.text];
+        NSLog(@"[%@ %@] text: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.textView.text);
+        self.navigationItem.title = [self makeTitle:self.textView.text];
     }
+
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
@@ -258,15 +260,12 @@
     
     [self.note.managedObjectContext save:nil];
     
-    // now the we finished editing the note, switch the bar button back to "Done"
-    if(self.splitViewController)
-    {
-        UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                             target:self
-                                                                             action:@selector(addANote:)];
-        add.enabled = YES;
-        [self.navigationItem setRightBarButtonItem:add animated:YES];
-    }
+    // now the we finished editing the note, switch the bar button back to "Add"
+    UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                         target:self
+                                                                         action:@selector(addANote:)];
+    add.enabled = YES;
+    [self.navigationItem setRightBarButtonItem:add animated:YES];
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView;
@@ -303,19 +302,19 @@
         {
             NSUInteger len = MIN([text length], 12);
             NSRange range = NSMakeRange(0, len);
-            title = [NSString stringWithFormat:@"%@...",[self.note.text substringWithRange:range]];
+            title = [NSString stringWithFormat:@"%@...",[text substringWithRange:range]];
         }
         else
         {
             NSRange range = NSMakeRange(0, cr.location);
-            title = [self.note.text substringWithRange:range];
+            title = [text substringWithRange:range];
         }
     }
     else
     {
         NSUInteger len = MIN([text length], 12);
         NSRange range = NSMakeRange(0, len);
-        title = [NSString stringWithFormat:@"%@...",[self.note.text substringWithRange:range]];
+        title = [NSString stringWithFormat:@"%@...",[text substringWithRange:range]];
     }
     
     return title;
