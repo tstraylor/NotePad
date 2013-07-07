@@ -31,6 +31,7 @@
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (strong, nonatomic) UIFont *noteFont;
 
 - (void)configureView;
 - (NSString *)makeTitle:(NSString*)text;
@@ -44,6 +45,7 @@
 @synthesize textView = _textView;
 @synthesize note = _note;
 @synthesize managedObjectContext = _managedObjectContext;
+@synthesize noteFont = _noteFont;
 
 #pragma mark - Setter
 
@@ -160,6 +162,22 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
+    self.view.backgroundColor = [UIColor colorWithRed:(255.0/255.0) green:(222.0/255.0) blue:(2.0/255.0) alpha:1.0];
+    
+    NSString *fontString = [[NSUserDefaults standardUserDefaults] stringForKey:@"fontValue"];
+    if([fontString isEqualToString:@"Marker Felt"])
+    {
+        self.noteFont = [UIFont fontWithName:@"MarkerFelt-Thin" size:17.0];
+    }
+    else if([fontString isEqualToString:@"Noteworthy"])
+    {
+        self.noteFont = [UIFont fontWithName:@"Noteworthy-Light" size:17.0];
+    }
+    else
+    {
+        self.noteFont = [UIFont systemFontOfSize:17.0];
+    }
+
     UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                          target:self
                                                                          action:@selector(addANote:)];
@@ -167,6 +185,7 @@
     [self.navigationItem setRightBarButtonItem:add animated:YES];
     
     self.textView.delegate = self;
+    self.textView.font = self.noteFont;
     [self.view addSubview:self.scrollView];
     [self.scrollView addSubview:self.textView];
 
@@ -286,7 +305,8 @@
 - (IBAction)addANote:(UIBarButtonItem *)sender
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    self.managedObjectContext = self.note.managedObjectContext;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+        self.managedObjectContext = self.note.managedObjectContext;
 }
 
 #pragma mark - Title Method

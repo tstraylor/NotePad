@@ -36,6 +36,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *appDefaults = [NSDictionary dictionaryWithObject:@"Marker Felt"
+                                                            forKey:@"fontValue"];
+    [defaults registerDefaults:appDefaults];
+    [defaults synchronize];
+
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:(72.0/255.0) green:(64.0/255.0) blue:(243.0/255.0) alpha:1.0]];
+    
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
         UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
@@ -49,6 +58,7 @@
         MasterViewController *controller = (MasterViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
     }
+    
     return YES;
 }
 							

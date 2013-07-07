@@ -8,6 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		1D21CD711749DB8500BFAC87 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1D21CD701749DB8500BFAC87 /* LICENSE.txt */; };
+		1D6FA7241788F324005BE23E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA7231788F324005BE23E /* Default@2x.png */; };
+		1D6FA7261788F33C005BE23E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA7251788F33C005BE23E /* Default-568h@2x.png */; };
+		1D6FA7271788F353005BE23E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA71917889E01005BE23E /* Icon.png */; };
+		1D6FA7281788F368005BE23E /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA71B17889E1A005BE23E /* Icon@2x.png */; };
+		1D6FA7291788F3A4005BE23E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA71D17889E25005BE23E /* Icon-72.png */; };
+		1D6FA72A1788F3B5005BE23E /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA71F17889E2F005BE23E /* Icon-144.png */; };
+		1D6FA72C1788F3C7005BE23E /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA72B1788F3C7005BE23E /* Default-Portrait~ipad.png */; };
+		1D6FA72E1788F3F3005BE23E /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA72D1788F3F3005BE23E /* Default-Portrait@2x~ipad.png */; };
+		1D6FA73017891852005BE23E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA72F17891852005BE23E /* Settings.bundle */; };
+		1D6FA73517891A32005BE23E /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA73117891A31005BE23E /* Icon-Small-50.png */; };
+		1D6FA73617891A32005BE23E /* Icon-Small-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA73217891A31005BE23E /* Icon-Small-100.png */; };
+		1D6FA73717891A32005BE23E /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA73317891A31005BE23E /* Icon-Small.png */; };
+		1D6FA73817891A32005BE23E /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA73417891A31005BE23E /* Icon-Small@2x.png */; };
 		1D921D9D173CB5BD00168A77 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D921D9C173CB5BD00168A77 /* UIKit.framework */; };
 		1D921D9F173CB5BD00168A77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D921D9E173CB5BD00168A77 /* Foundation.framework */; };
 		1D921DA1173CB5BD00168A77 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D921DA0173CB5BD00168A77 /* CoreGraphics.framework */; };
@@ -15,9 +28,6 @@
 		1D921DA9173CB5BD00168A77 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D921DA7173CB5BD00168A77 /* InfoPlist.strings */; };
 		1D921DAB173CB5BD00168A77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DAA173CB5BD00168A77 /* main.m */; };
 		1D921DAF173CB5BD00168A77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DAE173CB5BD00168A77 /* AppDelegate.m */; };
-		1D921DB1173CB5BD00168A77 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D921DB0173CB5BD00168A77 /* Default.png */; };
-		1D921DB3173CB5BD00168A77 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D921DB2173CB5BD00168A77 /* Default@2x.png */; };
-		1D921DB5173CB5BD00168A77 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D921DB4173CB5BD00168A77 /* Default-568h@2x.png */; };
 		1D921DB8173CB5BD00168A77 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D921DB6173CB5BD00168A77 /* MainStoryboard_iPhone.storyboard */; };
 		1D921DBB173CB5BD00168A77 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D921DB9173CB5BD00168A77 /* MainStoryboard_iPad.storyboard */; };
 		1D921DBE173CB5BD00168A77 /* NotePad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DBC173CB5BD00168A77 /* NotePad.xcdatamodeld */; };
@@ -29,6 +39,20 @@
 
 /* Begin PBXFileReference section */
 		1D21CD701749DB8500BFAC87 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		1D6FA71917889E01005BE23E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		1D6FA71B17889E1A005BE23E /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		1D6FA71D17889E25005BE23E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		1D6FA71F17889E2F005BE23E /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
+		1D6FA7211788F29C005BE23E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		1D6FA7231788F324005BE23E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		1D6FA7251788F33C005BE23E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		1D6FA72B1788F3C7005BE23E /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		1D6FA72D1788F3F3005BE23E /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		1D6FA72F17891852005BE23E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		1D6FA73117891A31005BE23E /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		1D6FA73217891A31005BE23E /* Icon-Small-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-100.png"; sourceTree = "<group>"; };
+		1D6FA73317891A31005BE23E /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		1D6FA73417891A31005BE23E /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		1D921D99173CB5BD00168A77 /* NotePad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotePad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D921D9C173CB5BD00168A77 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1D921D9E173CB5BD00168A77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -40,9 +64,6 @@
 		1D921DAC173CB5BD00168A77 /* NotePad-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotePad-Prefix.pch"; sourceTree = "<group>"; };
 		1D921DAD173CB5BD00168A77 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D921DAE173CB5BD00168A77 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1D921DB0173CB5BD00168A77 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		1D921DB2173CB5BD00168A77 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		1D921DB4173CB5BD00168A77 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		1D921DB7173CB5BD00168A77 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		1D921DBA173CB5BD00168A77 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		1D921DBD173CB5BD00168A77 /* NotePad.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NotePad.xcdatamodel; sourceTree = "<group>"; };
@@ -119,14 +140,25 @@
 		1D921DA5173CB5BD00168A77 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1D6FA73117891A31005BE23E /* Icon-Small-50.png */,
+				1D6FA73217891A31005BE23E /* Icon-Small-100.png */,
+				1D6FA73317891A31005BE23E /* Icon-Small.png */,
+				1D6FA73417891A31005BE23E /* Icon-Small@2x.png */,
+				1D6FA72D1788F3F3005BE23E /* Default-Portrait@2x~ipad.png */,
+				1D6FA72B1788F3C7005BE23E /* Default-Portrait~ipad.png */,
+				1D6FA7251788F33C005BE23E /* Default-568h@2x.png */,
+				1D6FA7231788F324005BE23E /* Default@2x.png */,
+				1D6FA7211788F29C005BE23E /* Default.png */,
+				1D6FA71F17889E2F005BE23E /* Icon-144.png */,
+				1D6FA71D17889E25005BE23E /* Icon-72.png */,
+				1D6FA71B17889E1A005BE23E /* Icon@2x.png */,
+				1D6FA71917889E01005BE23E /* Icon.png */,
 				1D921DA6173CB5BD00168A77 /* NotePad-Info.plist */,
 				1D921DA7173CB5BD00168A77 /* InfoPlist.strings */,
 				1D921DAA173CB5BD00168A77 /* main.m */,
 				1D921DAC173CB5BD00168A77 /* NotePad-Prefix.pch */,
-				1D921DB0173CB5BD00168A77 /* Default.png */,
-				1D921DB2173CB5BD00168A77 /* Default@2x.png */,
-				1D921DB4173CB5BD00168A77 /* Default-568h@2x.png */,
 				1D21CD701749DB8500BFAC87 /* LICENSE.txt */,
+				1D6FA72F17891852005BE23E /* Settings.bundle */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -152,6 +184,7 @@
 			buildPhases = (
 				1D921D95173CB5BD00168A77 /* Sources */,
 				1D921D96173CB5BD00168A77 /* Frameworks */,
+				1D6FA73917891F42005BE23E /* ShellScript */,
 				1D921D97173CB5BD00168A77 /* Resources */,
 			);
 			buildRules = (
@@ -195,16 +228,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D921DA9173CB5BD00168A77 /* InfoPlist.strings in Resources */,
-				1D921DB1173CB5BD00168A77 /* Default.png in Resources */,
-				1D921DB3173CB5BD00168A77 /* Default@2x.png in Resources */,
-				1D921DB5173CB5BD00168A77 /* Default-568h@2x.png in Resources */,
 				1D921DB8173CB5BD00168A77 /* MainStoryboard_iPhone.storyboard in Resources */,
 				1D921DBB173CB5BD00168A77 /* MainStoryboard_iPad.storyboard in Resources */,
 				1D21CD711749DB8500BFAC87 /* LICENSE.txt in Resources */,
+				1D6FA7241788F324005BE23E /* Default@2x.png in Resources */,
+				1D6FA7261788F33C005BE23E /* Default-568h@2x.png in Resources */,
+				1D6FA7271788F353005BE23E /* Icon.png in Resources */,
+				1D6FA7281788F368005BE23E /* Icon@2x.png in Resources */,
+				1D6FA7291788F3A4005BE23E /* Icon-72.png in Resources */,
+				1D6FA72A1788F3B5005BE23E /* Icon-144.png in Resources */,
+				1D6FA72C1788F3C7005BE23E /* Default-Portrait~ipad.png in Resources */,
+				1D6FA72E1788F3F3005BE23E /* Default-Portrait@2x~ipad.png in Resources */,
+				1D6FA73017891852005BE23E /* Settings.bundle in Resources */,
+				1D6FA73517891A32005BE23E /* Icon-Small-50.png in Resources */,
+				1D6FA73617891A32005BE23E /* Icon-Small-100.png in Resources */,
+				1D6FA73717891A32005BE23E /* Icon-Small.png in Resources */,
+				1D6FA73817891A32005BE23E /* Icon-Small@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1D6FA73917891F42005BE23E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export pbuddy=\"/usr/libexec/PlistBuddy\"\nexport SETTINGROOT=\"$SRCROOT/NotePad/Settings.bundle/Root.plist\"\nbuildNumber=$($pbuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$((0x$buildNumber))\nbuildNumber=$(($buildNumber + 1))\nbuildNumber=$(printf \"%X\" $buildNumber)\n$pbuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"\nproductVersion=$($pbuddy -c \"Print CFBundleShortVersionString\" \"$INFOPLIST_FILE\")\nnewVersion=\"$productVersion ($buildNumber)\"\necho \"Product Version: $newVersion\"\nfor (( c=0; c<=20; c++ ))\ndo\nversion=`$pbuddy -c \"print PreferenceSpecifiers:$c:Title\" $SETTINGROOT`\nif [ \"$version\" = \"Version\" ]\nthen\necho \"Product Version: $newVersion\"\n$pbuddy -c \"set PreferenceSpecifiers:$c:DefaultValue $newVersion\" $SETTINGROOT\nbreak;\nfi\ndone";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D921D95173CB5BD00168A77 /* Sources */ = {
@@ -315,6 +374,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NotePad/NotePad-Prefix.pch";
 				INFOPLIST_FILE = "NotePad/NotePad-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -326,6 +386,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NotePad/NotePad-Prefix.pch";
 				INFOPLIST_FILE = "NotePad/NotePad-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

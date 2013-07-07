@@ -39,9 +39,14 @@
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize managedObjectContext = _managedObjectContext;
 
+- (void) notepadTitle
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][0];
+    self.title = [NSString stringWithFormat:@"NotePad (%d)", [sectionInfo numberOfObjects]];
+}
+
 - (void)awakeFromNib
 {
-    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
     {
         self.clearsSelectionOnViewWillAppear = NO;
@@ -53,11 +58,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
     // Do any additional setup after loading the view, typically from a nib.
+
+    self.view.backgroundColor = [UIColor colorWithRed:(255.0/255.0) green:(222.0/255.0) blue:(2.0/255.0) alpha:1.0];
     
+    [self notepadTitle];
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    if(self.splitViewController)
+        self.detailViewController.managedObjectContext = self.managedObjectContext;
 
 }
 
@@ -236,15 +248,37 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
+    [self notepadTitle];
     [self.tableView endUpdates];
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    UIFont *bigFont = 0;
+    UIFont *smallFont = 0;
+    
+    NSString *fontString = [[NSUserDefaults standardUserDefaults] stringForKey:@"fontValue"];
+    if([fontString isEqualToString:@"Marker Felt"])
+    {
+        bigFont = [UIFont fontWithName:@"MarkerFelt-Wide" size:18.0];
+        smallFont = [UIFont fontWithName:@"MarkerFelt-Thin" size:14.0];
+    }
+    else if([fontString isEqualToString:@"Noteworthy"])
+    {
+        bigFont = [UIFont fontWithName:@"Noteworthy-Bold" size:18.0];
+        smallFont = [UIFont fontWithName:@"Noteworthy-Light" size:14.0];
+    }
+    else
+    {
+        bigFont = [UIFont systemFontOfSize:18.0];
+        smallFont = [UIFont systemFontOfSize:14.0];
+    }
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM-dd-yyyy HH:mm"];
     Note *note = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSRange cr = [note.text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
+    
     if(cr.length != NSNotFound)
     {
         if(cr.location > 24)
@@ -252,11 +286,13 @@
             NSUInteger len = MIN([note.text length], 24);
             NSRange range = NSMakeRange(0, len);
             cell.textLabel.text = [NSString stringWithFormat:@"%@...",[note.text substringWithRange:range]];
+            cell.textLabel.font = bigFont;
         }
         else
         {
             NSRange range = NSMakeRange(0, cr.location);
             cell.textLabel.text = [note.text substringWithRange:range];
+            cell.textLabel.font = bigFont;
         }
     }
     else
@@ -264,10 +300,13 @@
         NSUInteger len = MIN([note.text length], 24);
         NSRange range = NSMakeRange(0, len);
         cell.textLabel.text = [NSString stringWithFormat:@"%@...",[note.text substringWithRange:range]];
+        cell.textLabel.font = bigFont;
+        
         NSLog(@"[%@ %@] label: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), cell.textLabel.text);
     }
     
     cell.detailTextLabel.text = [dateFormatter stringFromDate:note.timeStamp];
+    cell.detailTextLabel.font = smallFont;
 
 }
 
