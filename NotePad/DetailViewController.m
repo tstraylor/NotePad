@@ -141,12 +141,27 @@
 {
     // Update the user interface for the detail item.
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    NSString *fontString = [[NSUserDefaults standardUserDefaults] stringForKey:@"fontValue"];
+    if([fontString isEqualToString:@"Marker Felt"])
+    {
+        self.noteFont = [UIFont fontWithName:@"MarkerFelt-Thin" size:17.0];
+    }
+    else if([fontString isEqualToString:@"Noteworthy"])
+    {
+        self.noteFont = [UIFont fontWithName:@"Noteworthy-Light" size:17.0];
+    }
+    else
+    {
+        self.noteFont = [UIFont systemFontOfSize:17.0];
+    }
+    
     if (self.note)
     {
         if(self.note.text)
         {
             self.navigationItem.title = [self makeTitle:self.note.text];
             self.textView.text = self.note.text;
+            self.textView.font = self.noteFont;
         }
         else
         {
