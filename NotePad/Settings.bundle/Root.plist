@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>DefaultValue</key>
+			<string>Marker Felt</string>
+			<key>Key</key>
+			<string>fontValue</string>
+			<key>Title</key>
+			<string>Font</string>
+			<key>Titles</key>
+			<array>
+				<string>Marker Felt</string>
+				<string>Noteworthy</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<string>Marker Felt</string>
+				<string>Noteworthy</string>
+			</array>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright © 2013 Thomas Traylor</string>
+			<key>Title</key>
+			<string>About</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>DefaultValue</key>
+			<string>1.0.0 (1D)</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>Key</key>
+			<string>versionValue</string>
+			<key>KeyboardType</key>
+			<string>Alphabet</string>
+			<key>Title</key>
+			<string>Version</string>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>
