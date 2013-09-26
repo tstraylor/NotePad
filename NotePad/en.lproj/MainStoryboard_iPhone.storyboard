@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <deployment defaultVersion="1552" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -22,34 +23,34 @@
         <!--Master View Controller - Master-->
         <scene sceneID="18">
             <objects>
-                <tableViewController storyboardIdentifier="" title="Master" id="12" customClass="MasterViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="13">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                <tableViewController title="Master" id="12" customClass="MasterViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="13">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="phq-AM-6qj" detailTextLabel="ntn-Au-e6w" style="IBUITableViewCellStyleSubtitle" id="lJ0-d7-vTF">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lJ0-d7-vTF" id="5Zm-e0-iiW">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="phq-AM-6qj">
-                                            <rect key="frame" x="10" y="1" width="35" height="24"/>
+                                            <rect key="frame" x="15" y="2" width="37" height="24"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ntn-Au-e6w">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ntn-Au-e6w">
+                                            <rect key="frame" x="15" y="26" width="47" height="16"/>
                                             <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="14"/>
                                             <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
+                                </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="21" kind="push" identifier="showNote" id="jZb-fq-zAk"/>
@@ -81,34 +82,40 @@
         <!--Detail View Controller - Detail-->
         <scene sceneID="24">
             <objects>
-                <viewController storyboardIdentifier="" title="Detail" id="21" customClass="DetailViewController" sceneMemberID="viewController">
+                <viewController title="Detail" id="21" customClass="DetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="B07-23-hNZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="WFc-bD-ymh"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="22">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BTr-Bf-ZYW">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kra-wh-CNi">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="top" secondItem="BTr-Bf-ZYW" secondAttribute="top" type="default" id="1hk-lG-Z7j"/>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="leading" secondItem="BTr-Bf-ZYW" secondAttribute="leading" type="default" id="6aJ-Y0-aWt"/>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="trailing" secondItem="BTr-Bf-ZYW" secondAttribute="trailing" type="default" id="Aje-3k-mMz"/>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="centerY" secondItem="BTr-Bf-ZYW" secondAttribute="centerY" type="default" id="VQT-KA-0aM"/>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="bottom" secondItem="BTr-Bf-ZYW" secondAttribute="bottom" type="default" id="dWC-Uf-HBl"/>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="centerX" secondItem="BTr-Bf-ZYW" secondAttribute="centerX" type="default" id="oLB-MW-MLi"/>
+                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="top" secondItem="BTr-Bf-ZYW" secondAttribute="top" id="1hk-lG-Z7j"/>
+                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="leading" secondItem="BTr-Bf-ZYW" secondAttribute="leading" id="6aJ-Y0-aWt"/>
+                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="trailing" secondItem="BTr-Bf-ZYW" secondAttribute="trailing" id="Aje-3k-mMz"/>
+                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="centerY" secondItem="BTr-Bf-ZYW" secondAttribute="centerY" id="VQT-KA-0aM"/>
+                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="bottom" secondItem="BTr-Bf-ZYW" secondAttribute="bottom" id="dWC-Uf-HBl"/>
+                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="centerX" secondItem="BTr-Bf-ZYW" secondAttribute="centerX" id="oLB-MW-MLi"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="top" secondItem="22" secondAttribute="top" type="default" id="Dme-fP-ZGY"/>
-                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="trailing" secondItem="22" secondAttribute="trailing" type="default" id="nNR-ms-mLK"/>
-                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="leading" secondItem="22" secondAttribute="leading" type="default" id="pmR-Sm-0WM"/>
-                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="bottom" secondItem="22" secondAttribute="bottom" type="default" id="pn8-ol-Jdz"/>
+                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="top" secondItem="22" secondAttribute="top" id="Dme-fP-ZGY"/>
+                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="trailing" secondItem="22" secondAttribute="trailing" id="nNR-ms-mLK"/>
+                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="leading" secondItem="22" secondAttribute="leading" id="pmR-Sm-0WM"/>
+                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="bottom" secondItem="22" secondAttribute="bottom" id="pn8-ol-Jdz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="26"/>
