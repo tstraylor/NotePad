@@ -31,9 +31,12 @@
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
-@property (strong, nonatomic) UIFont *noteFont;
 
+- (void)keyboardWasShown:(NSNotification*)notification;
+- (void)keyboardWillBeHidden:(NSNotification*)notification;
+- (void)handleOrientationChangeNotification:(NSNotification *)notification;
 - (void)configureView;
+- (NSUInteger)titleLength;
 - (NSString *)makeTitle:(NSString*)text;
 
 @end
@@ -45,7 +48,6 @@
 @synthesize textView = _textView;
 @synthesize note = _note;
 @synthesize managedObjectContext = _managedObjectContext;
-@synthesize noteFont = _noteFont;
 
 #pragma mark - Setter
 
@@ -92,17 +94,6 @@
 
 #pragma mark - Keyboard Management
 
-- (void)registerForKeyboardNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-}
-
 - (void)keyboardWasShown:(NSNotification*)notification
 {
     // get the size of the keyboard so we can move the textview up to keep the
@@ -135,25 +126,21 @@
     self.scrollView.scrollIndicatorInsets = contentInsets;
 }
 
+#pragma mark - Device Orientation Change Notification
+
+- (void)handleOrientationChangeNotification:(NSNotification *)notification
+{
+    self.navigationItem.backBarButtonItem.title = @"Notes";
+    self.navigationItem.title = [self makeTitle:self.note.text];
+
+}
+
 #pragma mark - View
 
 - (void)configureView
 {
     // Update the user interface for the detail item.
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    NSString *fontString = [[NSUserDefaults standardUserDefaults] stringForKey:@"fontValue"];
-    if([fontString isEqualToString:@"Marker Felt"])
-    {
-        self.noteFont = [UIFont fontWithName:@"MarkerFelt-Thin" size:17.0];
-    }
-    else if([fontString isEqualToString:@"Noteworthy"])
-    {
-        self.noteFont = [UIFont fontWithName:@"Noteworthy-Light" size:17.0];
-    }
-    else
-    {
-        self.noteFont = [UIFont systemFontOfSize:17.0];
-    }
     
     if (self.note)
     {
@@ -161,7 +148,8 @@
         {
             self.navigationItem.title = [self makeTitle:self.note.text];
             self.textView.text = self.note.text;
-            self.textView.font = self.noteFont;
+            self.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+            [self.textView setTextColor:[UIColor blackColor]];
         }
         else
         {
@@ -170,29 +158,15 @@
     }
 }
 
+#pragma mark - ViewController Lifecycle
+
 - (void)viewDidLoad
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-
-    self.view.backgroundColor = [UIColor colorWithRed:(255.0/255.0) green:(222.0/255.0) blue:(2.0/255.0) alpha:1.0];
     
-    NSString *fontString = [[NSUserDefaults standardUserDefaults] stringForKey:@"fontValue"];
-    if([fontString isEqualToString:@"Marker Felt"])
-    {
-        self.noteFont = [UIFont fontWithName:@"MarkerFelt-Thin" size:17.0];
-    }
-    else if([fontString isEqualToString:@"Noteworthy"])
-    {
-        self.noteFont = [UIFont fontWithName:@"Noteworthy-Light" size:17.0];
-    }
-    else
-    {
-        self.noteFont = [UIFont systemFontOfSize:17.0];
-    }
-
     UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                          target:self
                                                                          action:@selector(addANote:)];
@@ -200,13 +174,41 @@
     [self.navigationItem setRightBarButtonItem:add animated:YES];
     
     self.textView.delegate = self;
-    self.textView.font = self.noteFont;
+    self.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    [self.textView setTextColor:[UIColor blackColor]];
     [self.view addSubview:self.scrollView];
     [self.scrollView addSubview:self.textView];
 
-    [self configureView];
-    [self registerForKeyboardNotifications];
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    [self configureView];
+    
+    // setup the notifications for the Keyboard
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+    // we only want to be notified of rotations when it is the iPhone
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(handleOrientationChangeNotification:)
+                                                     name:UIDeviceOrientationDidChangeNotification
+                                                   object:nil];
+
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -249,7 +251,7 @@
 
 #pragma mark - UITextViewDelegate methods
 
--(void)textViewDidBeginEditing:(UITextView *)textView
+- (void)textViewDidBeginEditing:(UITextView *)textView
 {
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     
@@ -264,8 +266,8 @@
 {
     NSLog(@"[%@ %@] text len: %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self.textView.text length]);
 
-    // we want our title to be less then 12 characters.
-    if([self.textView.text length] < 12)
+    // once we get to titleLen we are not going to update the title
+    if([self.textView.text length] < [self titleLength])
     {
         NSLog(@"[%@ %@] text: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.textView.text);
         self.navigationItem.title = [self makeTitle:self.textView.text];
@@ -326,16 +328,37 @@
 
 #pragma mark - Title Method
 
+- (NSUInteger)titleLength
+{
+    NSUInteger titleLen = 12;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+    {
+        titleLen = 24;
+    }
+    else
+    {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationIsLandscape(orientation))
+            titleLen = 24;
+        else
+            titleLen = 12;
+    }
+
+    return titleLen;
+}
+
 // create the title for the note
 - (NSString *)makeTitle:(NSString *)text
 {
+    NSUInteger titleLen = [self titleLength];
+    
     NSString *title;
     NSRange cr = [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
     if(cr.length != NSNotFound)
     {
-        if(cr.location > 12)
+        if(cr.location > titleLen)
         {
-            NSUInteger len = MIN([text length], 12);
+            NSUInteger len = MIN([text length], titleLen);
             NSRange range = NSMakeRange(0, len);
             title = [NSString stringWithFormat:@"%@...",[text substringWithRange:range]];
         }
@@ -347,7 +370,7 @@
     }
     else
     {
-        NSUInteger len = MIN([text length], 12);
+        NSUInteger len = MIN([text length], titleLen);
         NSRange range = NSMakeRange(0, len);
         title = [NSString stringWithFormat:@"%@...",[text substringWithRange:range]];
     }

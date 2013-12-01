@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="3">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -10,6 +10,7 @@
             <objects>
                 <navigationController id="3" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="4">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -27,25 +28,35 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="13">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="sectionIndexColor" red="0.031372550870000002" green="0.011764707040000001" blue="0.0078431377190000002" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="sectionIndexTrackingBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="wUi-Dr-T3x">
+                            <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="12" id="kle-Q5-n8o"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="phq-AM-6qj" detailTextLabel="ntn-Au-e6w" style="IBUITableViewCellStyleSubtitle" id="lJ0-d7-vTF">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NoteCell" textLabel="phq-AM-6qj" detailTextLabel="ntn-Au-e6w" style="IBUITableViewCellStyleSubtitle" id="lJ0-d7-vTF">
+                                <rect key="frame" x="0.0" y="130" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lJ0-d7-vTF" id="5Zm-e0-iiW">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="phq-AM-6qj">
-                                            <rect key="frame" x="15" y="2" width="37" height="24"/>
+                                            <rect key="frame" x="15" y="2" width="34" height="22"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ntn-Au-e6w">
-                                            <rect key="frame" x="15" y="26" width="47" height="16"/>
-                                            <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="14"/>
+                                            <rect key="frame" x="15" y="24" width="50" height="17"/>
+                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
                                             <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
@@ -72,10 +83,20 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchDisplayController" destination="hBu-YU-idw" id="Wmi-8z-AeR"/>
                         <segue destination="21" kind="push" identifier="addNote" id="hOU-T2-Id5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="17" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="hBu-YU-idw">
+                    <connections>
+                        <outlet property="delegate" destination="12" id="70k-Gg-6KZ"/>
+                        <outlet property="searchBar" destination="wUi-Dr-T3x" id="cQR-rl-07P"/>
+                        <outlet property="searchContentsController" destination="12" id="oyf-2g-2cF"/>
+                        <outlet property="searchResultsDataSource" destination="12" id="V0E-mf-qHp"/>
+                        <outlet property="searchResultsDelegate" destination="12" id="ihu-zg-bU8"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="459" y="64"/>
         </scene>
@@ -92,30 +113,33 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BTr-Bf-ZYW">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="66" width="320" height="501"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kra-wh-CNi">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="502"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" red="0.031372550870000002" green="0.011764707040000001" blue="0.0078431377190000002" alpha="1" colorSpace="deviceRGB"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="top" secondItem="BTr-Bf-ZYW" secondAttribute="top" id="1hk-lG-Z7j"/>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="leading" secondItem="BTr-Bf-ZYW" secondAttribute="leading" id="6aJ-Y0-aWt"/>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="trailing" secondItem="BTr-Bf-ZYW" secondAttribute="trailing" id="Aje-3k-mMz"/>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="centerY" secondItem="BTr-Bf-ZYW" secondAttribute="centerY" id="VQT-KA-0aM"/>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="bottom" secondItem="BTr-Bf-ZYW" secondAttribute="bottom" id="dWC-Uf-HBl"/>
-                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="centerX" secondItem="BTr-Bf-ZYW" secondAttribute="centerX" id="oLB-MW-MLi"/>
+                                    <constraint firstAttribute="centerY" secondItem="Kra-wh-CNi" secondAttribute="centerY" id="0wD-hC-A9c"/>
+                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="leading" secondItem="BTr-Bf-ZYW" secondAttribute="leading" id="55A-qv-3Sq"/>
+                                    <constraint firstAttribute="trailing" secondItem="Kra-wh-CNi" secondAttribute="trailing" id="6nV-yH-Nuj"/>
+                                    <constraint firstItem="Kra-wh-CNi" firstAttribute="top" secondItem="BTr-Bf-ZYW" secondAttribute="top" id="HoS-TK-jIM"/>
+                                    <constraint firstAttribute="centerX" secondItem="Kra-wh-CNi" secondAttribute="centerX" id="kTI-Nk-BVu"/>
+                                    <constraint firstAttribute="bottom" secondItem="Kra-wh-CNi" secondAttribute="bottom" constant="-1" id="zRK-hS-6Ie"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="top" secondItem="22" secondAttribute="top" id="Dme-fP-ZGY"/>
-                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="trailing" secondItem="22" secondAttribute="trailing" id="nNR-ms-mLK"/>
-                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="leading" secondItem="22" secondAttribute="leading" id="pmR-Sm-0WM"/>
-                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="bottom" secondItem="22" secondAttribute="bottom" id="pn8-ol-Jdz"/>
+                            <constraint firstAttribute="centerX" secondItem="BTr-Bf-ZYW" secondAttribute="centerX" id="H1p-Vk-lcH"/>
+                            <constraint firstItem="WFc-bD-ymh" firstAttribute="top" secondItem="BTr-Bf-ZYW" secondAttribute="bottom" constant="1" id="WFa-g3-w7s"/>
+                            <constraint firstAttribute="centerY" secondItem="BTr-Bf-ZYW" secondAttribute="centerY" constant="-32.5" id="pkj-9y-dfv"/>
+                            <constraint firstItem="BTr-Bf-ZYW" firstAttribute="leading" secondItem="22" secondAttribute="leading" id="wT5-Vl-UJP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="26"/>
@@ -135,6 +159,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="hOU-T2-Id5"/>
+        <segue reference="jZb-fq-zAk"/>
     </inferredMetricsTieBreakers>
 </document>

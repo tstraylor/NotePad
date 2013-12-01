@@ -8,19 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D21CD711749DB8500BFAC87 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1D21CD701749DB8500BFAC87 /* LICENSE.txt */; };
-		1D6FA7241788F324005BE23E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA7231788F324005BE23E /* Default@2x.png */; };
-		1D6FA7261788F33C005BE23E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA7251788F33C005BE23E /* Default-568h@2x.png */; };
-		1D6FA7271788F353005BE23E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA71917889E01005BE23E /* Icon.png */; };
-		1D6FA7281788F368005BE23E /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA71B17889E1A005BE23E /* Icon@2x.png */; };
-		1D6FA7291788F3A4005BE23E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA71D17889E25005BE23E /* Icon-72.png */; };
-		1D6FA72A1788F3B5005BE23E /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA71F17889E2F005BE23E /* Icon-144.png */; };
-		1D6FA72C1788F3C7005BE23E /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA72B1788F3C7005BE23E /* Default-Portrait~ipad.png */; };
-		1D6FA72E1788F3F3005BE23E /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA72D1788F3F3005BE23E /* Default-Portrait@2x~ipad.png */; };
 		1D6FA73017891852005BE23E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA72F17891852005BE23E /* Settings.bundle */; };
-		1D6FA73517891A32005BE23E /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA73117891A31005BE23E /* Icon-Small-50.png */; };
-		1D6FA73617891A32005BE23E /* Icon-Small-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA73217891A31005BE23E /* Icon-Small-100.png */; };
-		1D6FA73717891A32005BE23E /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA73317891A31005BE23E /* Icon-Small.png */; };
-		1D6FA73817891A32005BE23E /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D6FA73417891A31005BE23E /* Icon-Small@2x.png */; };
 		1D921D9D173CB5BD00168A77 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D921D9C173CB5BD00168A77 /* UIKit.framework */; };
 		1D921D9F173CB5BD00168A77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D921D9E173CB5BD00168A77 /* Foundation.framework */; };
 		1D921DA1173CB5BD00168A77 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D921DA0173CB5BD00168A77 /* CoreGraphics.framework */; };
@@ -35,24 +23,12 @@
 		1D921DC4173CB5BD00168A77 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DC3173CB5BD00168A77 /* DetailViewController.m */; };
 		1D921DD0173CC89800168A77 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921DCF173CC89800168A77 /* Note.m */; };
 		1D9A6E20173FFCE3002AEE41 /* Note+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9A6E1F173FFCE3002AEE41 /* Note+Create.m */; };
+		1DB7F3BA184B07D30054A931 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DB7F3B9184B07D30054A931 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1D21CD701749DB8500BFAC87 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		1D6FA71917889E01005BE23E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		1D6FA71B17889E1A005BE23E /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		1D6FA71D17889E25005BE23E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		1D6FA71F17889E2F005BE23E /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
-		1D6FA7211788F29C005BE23E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		1D6FA7231788F324005BE23E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		1D6FA7251788F33C005BE23E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		1D6FA72B1788F3C7005BE23E /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		1D6FA72D1788F3F3005BE23E /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		1D6FA72F17891852005BE23E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		1D6FA73117891A31005BE23E /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
-		1D6FA73217891A31005BE23E /* Icon-Small-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-100.png"; sourceTree = "<group>"; };
-		1D6FA73317891A31005BE23E /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
-		1D6FA73417891A31005BE23E /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		1D921D99173CB5BD00168A77 /* NotePad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotePad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D921D9C173CB5BD00168A77 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1D921D9E173CB5BD00168A77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -75,6 +51,7 @@
 		1D921DCF173CC89800168A77 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		1D9A6E1E173FFCE3002AEE41 /* Note+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Note+Create.h"; sourceTree = "<group>"; };
 		1D9A6E1F173FFCE3002AEE41 /* Note+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Note+Create.m"; sourceTree = "<group>"; };
+		1DB7F3B9184B07D30054A931 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +109,7 @@
 				1D921DC2173CB5BD00168A77 /* DetailViewController.h */,
 				1D921DC3173CB5BD00168A77 /* DetailViewController.m */,
 				1D921DCA173CC65500168A77 /* Core Data */,
+				1DB7F3B9184B07D30054A931 /* Images.xcassets */,
 				1D921DA5173CB5BD00168A77 /* Supporting Files */,
 			);
 			path = NotePad;
@@ -140,19 +118,6 @@
 		1D921DA5173CB5BD00168A77 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1D6FA73117891A31005BE23E /* Icon-Small-50.png */,
-				1D6FA73217891A31005BE23E /* Icon-Small-100.png */,
-				1D6FA73317891A31005BE23E /* Icon-Small.png */,
-				1D6FA73417891A31005BE23E /* Icon-Small@2x.png */,
-				1D6FA72D1788F3F3005BE23E /* Default-Portrait@2x~ipad.png */,
-				1D6FA72B1788F3C7005BE23E /* Default-Portrait~ipad.png */,
-				1D6FA7251788F33C005BE23E /* Default-568h@2x.png */,
-				1D6FA7231788F324005BE23E /* Default@2x.png */,
-				1D6FA7211788F29C005BE23E /* Default.png */,
-				1D6FA71F17889E2F005BE23E /* Icon-144.png */,
-				1D6FA71D17889E25005BE23E /* Icon-72.png */,
-				1D6FA71B17889E1A005BE23E /* Icon@2x.png */,
-				1D6FA71917889E01005BE23E /* Icon.png */,
 				1D921DA6173CB5BD00168A77 /* NotePad-Info.plist */,
 				1D921DA7173CB5BD00168A77 /* InfoPlist.strings */,
 				1D921DAA173CB5BD00168A77 /* main.m */,
@@ -230,20 +195,9 @@
 				1D921DA9173CB5BD00168A77 /* InfoPlist.strings in Resources */,
 				1D921DB8173CB5BD00168A77 /* MainStoryboard_iPhone.storyboard in Resources */,
 				1D921DBB173CB5BD00168A77 /* MainStoryboard_iPad.storyboard in Resources */,
+				1DB7F3BA184B07D30054A931 /* Images.xcassets in Resources */,
 				1D21CD711749DB8500BFAC87 /* LICENSE.txt in Resources */,
-				1D6FA7241788F324005BE23E /* Default@2x.png in Resources */,
-				1D6FA7261788F33C005BE23E /* Default-568h@2x.png in Resources */,
-				1D6FA7271788F353005BE23E /* Icon.png in Resources */,
-				1D6FA7281788F368005BE23E /* Icon@2x.png in Resources */,
-				1D6FA7291788F3A4005BE23E /* Icon-72.png in Resources */,
-				1D6FA72A1788F3B5005BE23E /* Icon-144.png in Resources */,
-				1D6FA72C1788F3C7005BE23E /* Default-Portrait~ipad.png in Resources */,
-				1D6FA72E1788F3F3005BE23E /* Default-Portrait@2x~ipad.png in Resources */,
 				1D6FA73017891852005BE23E /* Settings.bundle in Resources */,
-				1D6FA73517891A32005BE23E /* Icon-Small-50.png in Resources */,
-				1D6FA73617891A32005BE23E /* Icon-Small-100.png in Resources */,
-				1D6FA73717891A32005BE23E /* Icon-Small.png in Resources */,
-				1D6FA73817891A32005BE23E /* Icon-Small@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +325,8 @@
 		1D921DC8173CB5BD00168A77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NotePad/NotePad-Prefix.pch";
 				INFOPLIST_FILE = "NotePad/NotePad-Info.plist";
@@ -383,6 +339,8 @@
 		1D921DC9173CB5BD00168A77 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NotePad/NotePad-Prefix.pch";
 				INFOPLIST_FILE = "NotePad/NotePad-Info.plist";

@@ -29,7 +29,13 @@
 
 @interface MasterViewController ()
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+@property (strong, nonatomic) NSFetchedResultsController *searchedResultsController;
+
+- (void)handleOrientationChangeNotification:(NSNotification *)notification;
+- (void)notepadTitle;
+- (NSUInteger)titleLength;
+- (void)configureCell:(UITableViewCell *)cell forNote:(Note *)note;
+- (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate;
 
 @end
 
@@ -38,12 +44,34 @@
 @synthesize detailViewController = _detailViewController;
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize managedObjectContext = _managedObjectContext;
+@synthesize searchedResultsController = _searchedResultsController;
 
-- (void) notepadTitle
+#pragma mark - Device Orientation Change Notification
+
+- (void)handleOrientationChangeNotification:(NSNotification *)notification
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][0];
-    self.title = [NSString stringWithFormat:@"NotePad (%d)", [sectionInfo numberOfObjects]];
+    [self.tableView reloadData];
 }
+
+#pragma mark - NotePad Title
+
+- (void)notepadTitle
+{
+    NSFetchedResultsController *fetched = nil;
+    
+    if([self.searchDisplayController isActive])
+        fetched = self.fetchedResultsController;
+    else
+        fetched = self.searchedResultsController;
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [fetched sections][0];
+    if([sectionInfo numberOfObjects] > 0)
+        self.title = [NSString stringWithFormat:@"NotePad (%d)", [sectionInfo numberOfObjects]];
+    else
+        self.title = @"NotePad";
+}
+
+#pragma mark - ViewController Lifecycle
 
 - (void)awakeFromNib
 {
@@ -62,8 +90,6 @@
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
     // Do any additional setup after loading the view, typically from a nib.
-
-    self.view.backgroundColor = [UIColor colorWithRed:(255.0/255.0) green:(222.0/255.0) blue:(2.0/255.0) alpha:1.0];
     
     [self notepadTitle];
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
@@ -73,11 +99,36 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    //if(self.splitViewController)
+        [self.tableView reloadData];
+   
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleOrientationChangeNotification:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
+
+    //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+    //                      atScrollPosition:UITableViewScrollPositionTop
+    //                              animated:YES];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if(self.splitViewController)
-        [self.tableView reloadData];
+    //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+    //                      atScrollPosition:UITableViewScrollPositionTop
+    //                              animated:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -88,21 +139,58 @@
 
 #pragma mark - Table View
 
+// get the number of sections in the table view
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    NSFetchedResultsController *fetched = nil;
+    
+    if(tableView == self.tableView)
+        fetched = self.fetchedResultsController;
+    else
+        fetched = self.searchedResultsController;
+    
+    return [[fetched sections] count];
 }
 
+// get the number of rows in the table view section
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    NSFetchedResultsController *fetched = nil;
+    
+    if(tableView == self.tableView)
+        fetched = self.fetchedResultsController;
+    else
+        fetched = self.searchedResultsController;
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[fetched sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    [self configureCell:cell atIndexPath:indexPath];
+    static NSString *cellIdentifier = @"NoteCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:cellIdentifier];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    }
+    
+    // get the right fetch controller
+    NSFetchedResultsController *fetched = nil;
+    if(tableView == self.tableView)
+        fetched = self.fetchedResultsController;
+    else
+        fetched = self.searchedResultsController;
+
+    // configure the cell
+    Note *note = [fetched objectAtIndexPath:indexPath];
+    [self configureCell:cell forNote:note];
+    
     return cell;
 }
 
@@ -116,8 +204,14 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        NSFetchedResultsController *fetched = nil;
+        if(tableView == self.tableView)
+            fetched = self.fetchedResultsController;
+        else
+            fetched = self.searchedResultsController;
+        
+        NSManagedObjectContext *context = [fetched managedObjectContext];
+        [context deleteObject:[fetched objectAtIndexPath:indexPath]];
         
         NSError *error = nil;
         if (![context save:&error])
@@ -142,18 +236,45 @@
 {
     if(self.splitViewController)
     {
-        Note *note = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSFetchedResultsController *fetched = nil;
+        if(tableView == self.tableView)
+            fetched = self.fetchedResultsController;
+        else
+            fetched = self.searchedResultsController;
+        
+        Note *note = [fetched objectAtIndexPath:indexPath];
         self.detailViewController.note = note;
+    }
+    else
+    {
+        // we only want to do this if the user is doing a search
+        if(tableView == self.searchDisplayController.searchResultsTableView)
+            [self performSegueWithIdentifier:@"showNote" sender:self];
     }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showNote"])
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    
+    if([[segue identifier] isEqualToString:@"showNote"])
     {
         NSLog(@"[%@ %@] showNote", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        Note *note = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        
+        NSFetchedResultsController *fetched = nil;
+        NSIndexPath *indexPath = nil;
+        if([self.searchDisplayController isActive])
+        {
+            fetched = self.searchedResultsController;
+            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+        }
+        else
+        {
+            fetched = self.fetchedResultsController;
+            indexPath = [self.tableView indexPathForSelectedRow];
+        }
+        
+        Note *note = [fetched objectAtIndexPath:indexPath];
         [[segue destinationViewController] setNote:note];
     }
     else if([[segue identifier] isEqualToString:@"addNote"])
@@ -167,154 +288,208 @@
 
 #pragma mark - Fetched results controller
 
-- (NSFetchedResultsController *)fetchedResultsController
+
+- (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate
 {
-    if (_fetchedResultsController != nil)
-    {
-        return _fetchedResultsController;
-    }
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note"
+                                              inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
+    // set the search predicate
+    [fetchRequest setPredicate:predicate];
+
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
+    // cache
+    NSString *cacheName = @"Master";
+    if( predicate ) cacheName = nil;
+    
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil
+                                                                                                           cacheName:cacheName];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
 	NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error])
     {
-	     // Replace this implementation with code to handle the error appropriately.
-	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate.
+        // You should not use this function in a shipping application, although
+        // it may be useful during development.
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
     
     return _fetchedResultsController;
-}    
 
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
 }
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+- (NSFetchedResultsController *)fetchedResultsController
 {
+    if (_fetchedResultsController)
+    {
+        return _fetchedResultsController;
+    }
+    
+    self.fetchedResultsController = [self fetchedResultsControllerWithPredicate:nil];
+    return _fetchedResultsController;
+    
+}
+
+- (NSFetchedResultsController *)searchedResultsController
+{
+    if( _searchedResultsController )
+    {
+        return _searchedResultsController;
+    }
+    
+    self.searchedResultsController = [self fetchedResultsControllerWithPredicate:nil];
+    return _searchedResultsController;
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex
+     forChangeType:(NSFetchedResultsChangeType)type
+{
+
+    UITableView *tableView = nil;
+    
+    if(controller == self.fetchedResultsController)
+        tableView = self.tableView;
+    else
+        tableView = self.searchDisplayController.searchResultsTableView;
+    
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                     withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                     withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
+    
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    UITableView *tableView = self.tableView;
+    UITableView *tableView = nil;
+    
+    if(controller == self.fetchedResultsController)
+        tableView = self.tableView;
+    else
+        tableView = self.searchDisplayController.searchResultsTableView;
     
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+        {
+            Note *note = [controller objectAtIndexPath:indexPath];
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] forNote:note];
+
+        }
             break;
             
         case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    UITableView *tableView = nil;
+    if(controller == self.fetchedResultsController)
+        tableView = self.tableView;
+    else
+        tableView = self.searchDisplayController.searchResultsTableView;
+    
+    [tableView beginUpdates];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
+    UITableView *tableView = nil;
+    if(controller == self.fetchedResultsController)
+        tableView = self.tableView;
+    else
+        tableView = self.searchDisplayController.searchResultsTableView;
+    
     [self notepadTitle];
-    [self.tableView endUpdates];
+    [tableView endUpdates];
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+// configure the note table view cell
+- (void)configureCell:(UITableViewCell *)cell forNote:(Note *)note
 {
-    UIFont *bigFont = 0;
-    UIFont *smallFont = 0;
-    
-    NSString *fontString = [[NSUserDefaults standardUserDefaults] stringForKey:@"fontValue"];
-    if([fontString isEqualToString:@"Marker Felt"])
-    {
-        bigFont = [UIFont fontWithName:@"MarkerFelt-Wide" size:18.0];
-        smallFont = [UIFont fontWithName:@"MarkerFelt-Thin" size:14.0];
-    }
-    else if([fontString isEqualToString:@"Noteworthy"])
-    {
-        bigFont = [UIFont fontWithName:@"Noteworthy-Bold" size:18.0];
-        smallFont = [UIFont fontWithName:@"Noteworthy-Light" size:14.0];
-    }
-    else
-    {
-        bigFont = [UIFont systemFontOfSize:18.0];
-        smallFont = [UIFont systemFontOfSize:14.0];
-    }
-    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM-dd-yyyy HH:mm"];
-    Note *note = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSRange cr = [note.text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
     
     if(cr.length != NSNotFound)
     {
-        if(cr.location > 24)
+        if(cr.location > [self titleLength])
         {
-            NSUInteger len = MIN([note.text length], 24);
+            NSUInteger len = MIN([note.text length], [self titleLength]);
             NSRange range = NSMakeRange(0, len);
             cell.textLabel.text = [NSString stringWithFormat:@"%@...",[note.text substringWithRange:range]];
-            cell.textLabel.font = bigFont;
         }
         else
         {
             NSRange range = NSMakeRange(0, cr.location);
             cell.textLabel.text = [note.text substringWithRange:range];
-            cell.textLabel.font = bigFont;
         }
     }
     else
     {
-        NSUInteger len = MIN([note.text length], 24);
+        NSUInteger len = MIN([note.text length], [self titleLength]);
         NSRange range = NSMakeRange(0, len);
         cell.textLabel.text = [NSString stringWithFormat:@"%@...",[note.text substringWithRange:range]];
-        cell.textLabel.font = bigFont;
+        
         
         NSLog(@"[%@ %@] label: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), cell.textLabel.text);
     }
     
+    cell.textLabel.font = [UIFont systemFontOfSize:18.0];
+    cell.textLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.text = [dateFormatter stringFromDate:note.timeStamp];
-    cell.detailTextLabel.font = smallFont;
-
+    cell.detailTextLabel.font = [UIFont italicSystemFontOfSize:14.0];
+    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+    
 }
 
 #pragma mark - Add Note
@@ -333,4 +508,60 @@
     }
 }
 
+#pragma mark - Title Length Method
+
+- (NSUInteger)titleLength
+{
+    // default table view title length
+    NSUInteger titleLen = 24;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+    {
+        titleLen = 24;
+    }
+    else
+    {
+        // if we are a phone and turned landscape we want to give the user a bit more
+        // title info
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationIsLandscape(orientation))
+            titleLen = 36;
+    }
+    
+    return titleLen;
+}
+
+#pragma mark - UISearchDisplayDelegate Methods
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"text contains[cd] %@", searchString];
+    self.searchedResultsController = [self fetchedResultsControllerWithPredicate:searchPredicate];
+
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
+{
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    self.searchedResultsController.delegate = nil;
+    self.searchedResultsController = nil;
+    [controller.searchResultsTableView reloadData];
+    
+    // Scroll to top
+    //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+   //                       atScrollPosition:UITableViewScrollPositionTop
+     //                             animated:YES];
+    [self.tableView reloadData];
+}
+
+#pragma mark - UISearchBarDelegate Methods
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    //self.searchedResultsController = nil;
+}
 @end
