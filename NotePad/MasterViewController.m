@@ -112,17 +112,6 @@
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
 
-    //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
-    //                      atScrollPosition:UITableViewScrollPositionTop
-    //                              animated:YES];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
-    //                      atScrollPosition:UITableViewScrollPositionTop
-    //                              animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -550,11 +539,6 @@
     self.searchedResultsController.delegate = nil;
     self.searchedResultsController = nil;
     [controller.searchResultsTableView reloadData];
-    
-    // Scroll to top
-    //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
-   //                       atScrollPosition:UITableViewScrollPositionTop
-     //                             animated:YES];
     [self.tableView reloadData];
 }
 
