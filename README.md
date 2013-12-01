@@ -3,7 +3,8 @@ NotePad
 
 iPhone / iPad NotePad application.
 
-This app was created to test out the use of Core Date and the UISplitViewController. 
+This app was created to test out the use of Core Date and the UISplitViewController. The app was 
+recently updated for iOS7.
 
 ### Creators
 
