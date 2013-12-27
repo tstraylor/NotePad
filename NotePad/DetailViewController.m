@@ -135,6 +135,14 @@
 
 }
 
+#pragma mark - Font Change Notification
+
+// font change notification
+- (void)handleFontChangeNotification:(NSNotification *)notification
+{
+    self.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+}
+
 #pragma mark - View
 
 - (void)configureView
@@ -202,6 +210,12 @@
                                                  selector:@selector(handleOrientationChangeNotification:)
                                                      name:UIDeviceOrientationDidChangeNotification
                                                    object:nil];
+    
+    // check for font changes
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleFontChangeNotification:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
 
 }
 
